@@ -18,15 +18,13 @@ function preload() {
     // img.resize(50,0)
     imgFiles.push(img)
   }
-  // for (let i = 0; i < videoFileNames.length; i++) {
-  //   let vid = createVideo("assets_a/" +videoFileNames[i])
-  //   vid.onloadedmetadata = () => {
-  //     vid.time(0);  // 将视频时间设置为 0，定格在第一帧
-  //     vid.pause();  // 停止播放
-  //   };
-  //   videoFiles.push(vid)
-  //   vid.hide()
-  // }
+  for (let i = 0; i < videoFileNames.length; i++) {
+    let vid = createVideo("assets_a/" +videoFileNames[i])
+    console.log(vid.width)
+    videoFiles.push(vid)
+
+    vid.hide()
+  }
   bg = loadImage("assets_a/bg.jpg")
 }
 function showTime(){
@@ -64,11 +62,11 @@ function setFullScreen(){
   }
   button.hide()
   state=1
-  // for (let i = 0; i < videoFiles.length; i++) {
-  //   videoFiles[i].
-    
-
-  // }
+  for (let i = 0; i < videoFiles.length; i++) {
+    videoFiles[i].play()
+    videoFiles[i].time(2)
+    videoFiles[i].volume(0)
+  }
 }
 function setup() {
   // createCanvas(windowWidth, 0.65*windowWidth);
@@ -83,12 +81,12 @@ function setup() {
     let dImg = new DraggableImg(imgFiles[i], imgFileNames[i])
     draggableImgs.push(dImg)
   }
-  // for (let i = 0; i < videoFiles.length; i++) {
-  //   let dImg = new DraggableImg(videoFiles[i], videoFileNames[i])
-  //   // videoFiles[i].play()
-  //   draggableImgs.push(dImg)
-  //   console.log(dImg.pos.x/width,dImg.pos.y/height)
-  // }
+  for (let i = 0; i < videoFiles.length; i++) {
+    let dImg = new DraggableImg(videoFiles[i], videoFileNames[i])
+    // videoFiles[i].play()
+    draggableImgs.push(dImg)
+    console.log(dImg.pos.x/width,dImg.pos.y/height)
+  }
 
 
 }
@@ -133,7 +131,8 @@ function draw() {
         if(dClick==true){
           if (dragImg.inArea() == true) {
              openIndex = i
-             let w = imgFiles[openIndex].width /imgFiles[openIndex].height*height*0.7 
+             draggableImgs[openIndex].playState = true
+             let w = draggableImgs[openIndex].img.width /draggableImgs[openIndex].img.height*height*0.7 
              let h = height*0.6
              randX = random(w/2,width-w/2)
              randY = random(h/2+height * 0.04,height*0.94-h/2)
@@ -145,16 +144,19 @@ function draw() {
     }
   
     if(openIndex>-1){
-      let w = imgFiles[openIndex].width /imgFiles[openIndex].height*height*0.7 
+      
+      let w = draggableImgs[openIndex].img.width /draggableImgs[openIndex].img.height*height*0.7 
       let h = height*0.6
-      imgFiles[openIndex].play()
-      image(imgFiles[openIndex],randX,randY,w,h)
+      draggableImgs[openIndex].img.play()
+      image(draggableImgs[openIndex].img,randX,randY,w,h)
 
   
       if(mouseIsPressed){
-        let w = imgFiles[openIndex].width/imgFiles[openIndex].height*height*0.7 
+        let w = draggableImgs[openIndex].img.width/draggableImgs[openIndex].img.height*height*0.7 
       let h = height*0.6
         if(abs(mouseX-randX)<w/2 && abs(mouseY-randY)<h/2){
+          draggableImgs[openIndex].playState = false
+
           openIndex = -1
         }
       }
@@ -174,10 +176,21 @@ class DraggableImg {
     this.w = random([width/30, width/35])
     this.h = this.img.height / this.img.width * this.w
     this.pos = createVector(random(width/30 / 2, width - width/30 / 2), random(height * 0.04 + this.h / 2, height * 0.94 - this.h))
+    this.playState = false
 
   }
   display() {
-    this.img.pause()
+    if(this.playState==false){
+      
+     this.img.pause()
+      
+    }else{
+      if (this.img instanceof p5.MediaElement) {
+        this.img.play()
+      }
+    }
+  
+    
     image(this.img, this.pos.x, this.pos.y, this.w, this.h)
     fill(255)
     textSize(12)
