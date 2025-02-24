@@ -19,7 +19,7 @@ function preload() {
 
 }
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, 0.65*windowWidth);
   imageMode(CENTER)
   image(bg, width / 2, height / 2, width, height)
   for (let i = 0; i < imgFiles.length; i++) {
