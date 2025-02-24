@@ -3,7 +3,7 @@ import re
 
 def clean_filename(filename):
     # 删除乱码字符：匹配所有非 ASCII 字符并删除
-    filename = re.sub(r'[^\x00-\x7F]+', '', filename)
+    # filename = re.sub(r'[^\x00-\x7F]+', '', filename)
     
     # 替换空格和@符号为下划线
     filename = filename.replace(" ", "_").replace("@", "_").replace("#", "_")
@@ -49,7 +49,7 @@ def organize_files_by_extension(directory_path):
 
 
 def save_to_txt(jpg_files, png_files, gif_files, other_files, output_path):
-    with open(output_path, 'w') as f:
+    with open(output_path, 'w',encoding='utf-8') as f:
         # 写入每个类型的文件名到文本文件，以数组格式存储
         f.write(f'JPG Files: {str(jpg_files)}\n')
         f.write(f'PNG Files: {str(png_files)}\n')
@@ -59,7 +59,7 @@ def save_to_txt(jpg_files, png_files, gif_files, other_files, output_path):
 
 def main():
     # 设置文件夹路径和输出文件路径
-    directory_path = 'assets'  # 更改为目标文件夹路径
+    directory_path = 'digitalhoard/assets1'  # 更改为目标文件夹路径
     output_path = 'output_files.txt'  # 输出结果的文本文件路径
 
     # 组织文件
