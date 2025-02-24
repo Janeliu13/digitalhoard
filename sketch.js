@@ -8,6 +8,8 @@ let offsetX = -1, offsetY = -1
 let selectIndex = -1;
 let openIndex = -1
 let randX,randY
+let button
+let state = 0
 function preload() {
   for (let i = 0; i < imgFileNames.length; i++) {
     let img = loadImage("assets/" + imgFileNames[i])
@@ -17,11 +19,25 @@ function preload() {
   }
   bg = loadImage("assets/bg.jpg")
 
+
+}
+function setFullScreen(){
+  let fs = fullscreen();  // 获取当前全屏状态
+  if (!fs) {
+    fullscreen(true);  // 如果没有全屏，则设置为全屏
+  }
+  button.hide()
+  state=1
 }
 function setup() {
-  createCanvas(windowWidth, 0.65*windowWidth);
+  // createCanvas(windowWidth, 0.65*windowWidth);
+  createCanvas(windowWidth, windowHeight); // 创建一个占据整个屏幕的画布
+  button  = createButton("Start")
+  button.position(width/2,height/2)
+  button.mouseClicked(setFullScreen)
+  
   imageMode(CENTER)
-  image(bg, width / 2, height / 2, width, height)
+  // image(bg, width / 2, height / 2, width, height)
   for (let i = 0; i < imgFiles.length; i++) {
     let dImg = new DraggableImg(imgFiles[i], imgFileNames[i])
     draggableImgs.push(dImg)
@@ -33,70 +49,73 @@ function mouseClicked() {
   console.log((mouseX / width).toFixed(2), (mouseY / height).toFixed(2))
 }
 function draw() {
-  image(bg, width / 2, height / 2, width, height)
+  if(state==1){
+    image(bg, width / 2, height / 2, width, height)
 
-  // background(220);
-  for (let i = 0; i < draggableImgs.length; i++) {
-    draggableImgs[i].display()
-  }
-
-
-  if (selectIndex > -1) {
-    dragImg = draggableImgs[selectIndex]
-    dragImg.display()
-
-    dragImg.pos.x = mouseX - offsetX
-    dragImg.pos.y = mouseY - offsetY
-  } else {
-
-    for (let i = draggableImgs.length - 1; i >= 0; i--) {
-      let dragImg = draggableImgs[i]
-      if (dragging == true) {
-        if (dragImg.inArea() == true) {
-          if (offsetX == -1 && offsetY == -1) {
-            offsetX = mouseX - dragImg.pos.x
-            offsetY = mouseY - dragImg.pos.y
-            selectIndex = i
-          }
-
-          break;
-        }
-      }
-      if(dClick==true){
-        if (dragImg.inArea() == true) {
-           openIndex = i
-           let w = imgFiles[openIndex].width /imgFiles[openIndex].height*height*0.7 
-           let h = height*0.6
-           randX = random(w/2,width-w/2)
-           randY = random(h/2+height * 0.04,height*0.94-h/2)
-           break;
-        }
-      }
+    // background(220);
+    for (let i = 0; i < draggableImgs.length; i++) {
+      draggableImgs[i].display()
     }
-
-  }
-
-  if(openIndex>-1){
-    let w = imgFiles[openIndex].width /imgFiles[openIndex].height*height*0.7 
-    let h = height*0.6
-    image(imgFiles[openIndex],randX,randY,w,h)
-
-    if(mouseIsPressed){
-      let w = imgFiles[openIndex].width/imgFiles[openIndex].height*height*0.7 
-    let h = height*0.6
-      if(abs(mouseX-randX)<w/2 && abs(mouseY-randY)<h/2){
-        openIndex = -1
-      }
-    }
-  }
-  // }
-    
   
-  dClick = false
-
+  
+    if (selectIndex > -1) {
+      dragImg = draggableImgs[selectIndex]
+      dragImg.display()
+  
+      dragImg.pos.x = mouseX - offsetX
+      dragImg.pos.y = mouseY - offsetY
+    } else {
+  
+      for (let i = draggableImgs.length - 1; i >= 0; i--) {
+        let dragImg = draggableImgs[i]
+        if (dragging == true) {
+          if (dragImg.inArea() == true) {
+            if (offsetX == -1 && offsetY == -1) {
+              offsetX = mouseX - dragImg.pos.x
+              offsetY = mouseY - dragImg.pos.y
+              selectIndex = i
+            }
+  
+            break;
+          }
+        }
+        if(dClick==true){
+          if (dragImg.inArea() == true) {
+             openIndex = i
+             let w = imgFiles[openIndex].width /imgFiles[openIndex].height*height*0.7 
+             let h = height*0.6
+             randX = random(w/2,width-w/2)
+             randY = random(h/2+height * 0.04,height*0.94-h/2)
+             break;
+          }
+        }
+      }
+  
+    }
+  
+    if(openIndex>-1){
+      let w = imgFiles[openIndex].width /imgFiles[openIndex].height*height*0.7 
+      let h = height*0.6
+      image(imgFiles[openIndex],randX,randY,w,h)
+  
+      if(mouseIsPressed){
+        let w = imgFiles[openIndex].width/imgFiles[openIndex].height*height*0.7 
+      let h = height*0.6
+        if(abs(mouseX-randX)<w/2 && abs(mouseY-randY)<h/2){
+          openIndex = -1
+        }
+      }
+    }
+    // }
+      
+    
+    dClick = false
+  
+  }
+  
+  
+  
 }
-
-
 class DraggableImg {
   constructor(img, name) {
     this.img = img
@@ -136,4 +155,7 @@ function mouseReleased() {
 function doubleClicked() {
   dClick = true
   console.log("dclick", dClick)
+}
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
