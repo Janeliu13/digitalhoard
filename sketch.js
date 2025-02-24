@@ -121,7 +121,7 @@ class DraggableImg {
     this.img = img
     this.name = name
     this.pos = createVector(random(75 / 2, width - 75 / 2), random(height * 0.04 + 75 / 2, height * 0.94 - 75))
-    this.w = random([50, 75])
+    this.w = random([width/30, width/35])
     this.h = this.img.height / this.img.width * 50
   }
   display() {
