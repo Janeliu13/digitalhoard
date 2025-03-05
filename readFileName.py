@@ -36,12 +36,8 @@ def organize_files_by_extension(directory_path):
             file_extension = filename.split('.')[-1].lower()
 
             # 根据文件扩展名将文件名添加到相应的数组
-            if file_extension == 'jpg':
-                jpg_files.append(filename)
-            elif file_extension == 'png':
-                png_files.append(filename)
-            elif file_extension == 'gif':
-                gif_files.append(filename)
+            if file_extension == 'jpg' or file_extension == 'png' or file_extension == 'gif':
+                jpg_files.append(filename)           
             else:
                 other_files.append(filename)
 
@@ -59,7 +55,7 @@ def save_to_txt(jpg_files, png_files, gif_files, other_files, output_path):
 
 def main():
     # 设置文件夹路径和输出文件路径
-    directory_path = 'digitalhoard/assets1'  # 更改为目标文件夹路径
+    directory_path = 'digitalhoard/digital hoard (edited)'  # 更改为目标文件夹路径
     output_path = 'output_files.txt'  # 输出结果的文本文件路径
 
     # 组织文件
