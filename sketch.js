@@ -54,7 +54,7 @@ function showTime(){
     let formattedDate = `${weekday} ${month} ${day}  ${hour}:${minute}${ampm}`;
   
     // 显示格式化后的日期和时间
-    textSize(20)
+    textSize(15)
     textAlign(CENTER,CENTER)
     text(formattedDate, width*0.95, height*0.02);
 }
