@@ -28,7 +28,7 @@ function preload() {
 
     vid.hide()
   }
-  bg = loadImage("assets_a/bg.jpg")
+  bg = loadImage("digital hoard (edited)/bg.jpg")
 }
 function showTime() {
   // 获取当前的日期和时间
