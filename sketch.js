@@ -117,11 +117,11 @@ function draw() {
     textAlign(LEFT, CENTER)
     textSize(20)
     fill(98, 116, 189,180)
-    text("1. Press START to begin the web-based interaction.", width * 0.35, height * 0.7)
-    text("2. STAY on this screen— please avoid swiping left or right.", width * 0.35, height * 0.75)
-    text("3. INTERACT with image and video files by DRAGGING and DOUBLE CLICKING to enlarge.", width * 0.35, height * 0.8)
-    text("4. To CLOSE an image or video file, CLICK on it ONCE", width * 0.35, height * 0.85)
-    text("5. Click the REFRESH button in the top left corner to restart for the next user.", width * 0.35, height * 0.9)
+    text("1. Press START to begin the web-based interaction.", width * 0.3, height * 0.7)
+    text("2. STAY on this screen— please avoid swiping left or right.", width * 0.3, height * 0.75)
+    text("3. INTERACT with image and video files by DRAGGING and DOUBLE CLICKING to enlarge.", width * 0.3, height * 0.8)
+    text("4. To CLOSE an image or video file, CLICK on it ONCE", width * 0.3, height * 0.85)
+    text("5. Click the REFRESH button in the top left corner to restart for the next user.", width * 0.3, height * 0.9)
 
   }
   if (state == 1) {
