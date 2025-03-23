@@ -208,7 +208,7 @@ class DraggableImg {
     this.h = rate * this.w * 0.8
     this.pos = createVector(random(width / 30 / 2, width - width / 30 / 2), random(height * 0.04 + this.h / 2, height * 0.94 - this.h))
     this.playState = false
-    this.delayTime = random(1000)
+    this.delayTime = random(500)
 
   }
   display() {
