@@ -116,7 +116,7 @@ function draw() {
   if (state == 0) {
     textAlign(LEFT, CENTER)
     textSize(20)
-    fill(98, 116, 189,180)
+    fill(98, 116, 189, 180)
     text("1. Press START to begin the web-based interaction.", width * 0.3, height * 0.7)
     text("2. STAY on this screen— please avoid swiping left or right.", width * 0.3, height * 0.75)
     text("3. INTERACT with image and video files by DRAGGING and DOUBLE CLICKING to enlarge.", width * 0.3, height * 0.8)
@@ -130,7 +130,7 @@ function draw() {
 
     // background(220);
     for (let i = 0; i < draggableImgs.length; i++) {
-      if(frameCount-startFrameCount>draggableImgs[i].delayTime){
+      if (frameCount - startFrameCount > draggableImgs[i].delayTime) {
         draggableImgs[i].display()
       }
 
@@ -208,7 +208,7 @@ class DraggableImg {
     this.h = rate * this.w * 0.8
     this.pos = createVector(random(width / 30 / 2, width - width / 30 / 2), random(height * 0.04 + this.h / 2, height * 0.94 - this.h))
     this.playState = false
-    this.delayTime = random(1000)
+    this.delayTime = random(500)
 
   }
   display() {
@@ -223,14 +223,15 @@ class DraggableImg {
     }
 
 
- 
-      image(this.img, this.pos.x, this.pos.y, this.w, this.h)
-      fill(255)
-      textSize(12)
-      textAlign(CENTER)
-      text(this.name, this.pos.x, this.pos.y + this.h / 2 + 15)
-    
-   
+
+    image(this.img, this.pos.x, this.pos.y, this.w, this.h)
+    fill(255)
+    textSize(12)
+    textAlign(CENTER)
+    if(this.name)
+    text(this.name, this.pos.x, this.pos.y + this.h / 2 + 15)
+
+
   }
   inArea() {
     // if(dragging){
